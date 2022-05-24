@@ -13,6 +13,7 @@ var cities = [];
 // WHEN I click on a city in the search history
 // THEN I am again presented with current and future conditions for that city -->
 
+// api = AIzaSyDwDj4Jf2xSA6hJJ9cYetg8hn4SX3OPs04
 
 //  * When I click the search button, a button is dynamically generated and displayed in a card underneath
 //  ! To Do: Fix the multiple button issue
@@ -25,24 +26,19 @@ function cityButtonHandler() {
    }; getApi();
 }
 
-// * Once the submit button is clicked and cityButtonHandler goes, I fetch the api information needed to display it to the DOM 
-function getApi() {
-  var requestUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=33.44&lon=-94.04&appid=66d2d9bcf1100f15b471153e4495b6ac";
-    fetch(requestUrl).then(function(response) {
-        if (response.ok) {
-            response.json().then(function(weatherData) {
-                displayForecast(weatherData);
-            })
-        } else {
-            alert('Error:' + response);
-        }
-    })
-};
+//  * Get latitude and longitude coordinates from the location types into the input field
+// function getLocation() {
+//     var requestUrl = "https://maps.googleapis.com/maps/api/geocode/json?place_id=ChIJd8BlQ2BZwokRAFUEcm_qrcA&key=AIzaSyDwDj4Jf2xSA6hJJ9cYetg8hn4SX3OPs04";
+//     fetch(requestUrl).then(function(response) {
+//         if (response.ok) {
+//             response.json().then(function(location) {
+//                 console.log(location)
+//             })
+//         };
+//     });
+// }
 
-//  * I take the data from the Api and display it onto the html
-function displayForecast(weatherData) {
-    console.log(weatherData);
-}
+
 
 //  * When I click the submit button, the search is stored in localStorage and taken to cityButtonHandler function
 $(searchButtonEl).on('click', function(event) {
@@ -52,8 +48,29 @@ $(searchButtonEl).on('click', function(event) {
     localStorage.setItem('cities', JSON.stringify(cities));
     $('#search-item').val('');
     // searchHistoryHandler();
-    cityButtonHandler();
+    // cityButtonHandler();
+    getApi(searchValue);
 });
+
+// * Once the submit button is clicked and cityButtonHandler goes, I fetch the api information needed to display it to the DOM 
+function getApi(searchValue) {
+    var requestUrl = "https://api.openweathermap.org/data/2.5/weeather?q=" + searchValue + "&appid=66d2d9bcf1100f15b471153e4495b6ac";
+      fetch(requestUrl).then(function(response) {
+          if (response.ok) {
+              response.json().then(function(weatherData) {
+                  displayForecast(weatherData);
+              })
+          } else {
+              alert('Error:' + response);
+          }
+      })
+  };
+  
+  //  * I take the data from the Api and dynamically it onto the html
+function displayForecast(weatherData) {
+    console.log(weatherData);
+}
+
 
 
 // var string = "Hello World";
