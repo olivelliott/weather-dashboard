@@ -105,7 +105,8 @@ function displayForecast(weatherData) {
         var currentWindSpeedEl = "Current Wind Speed : " + weatherData.wind.speed + " MPH";
         $('<li>' + currentWindSpeedEl + '</li>').appendTo('#current-weather-display');
          //  ! currentDateEl = weatherData.date;
-        //  ! currentUVIndexEl = weatherData.main.uvi;
+        // ! currentUVIndexEl = weatherData.main.current.uvi;
+        // console.log(currentUVIndexEl);
         // currentIconEl = weatherData.weather.icon;
         // $('<a>').attr(img, 'href').text(currentIconEl).appendTo('#current-weather-display');
         // $('<a>').attr('src', currentIconEl)
