@@ -1,11 +1,15 @@
 var searchButtonEl = $('#search-btn');
+var currentWeatherDisplayEl = $('#current-weather');
+var weatherApi = '66d2d9bcf1100f15b471153e4495b6ac';
 var cities = [];
 
 
 // WHEN I search for a city
 // THEN I am presented with current and future conditions for that city and that city is added to the search history
 // WHEN I view current weather conditions for that city
-// THEN I am presented with the city name, the date, an icon representation of weather conditions, the temperature, the humidity, the wind speed, and the UV index
+
+
+// THEN I am presented with the
 // WHEN I view the UV index
 // THEN I am presented with a color that indicates whether the conditions are favorable, moderate, or severe
 // WHEN I view future weather conditions for that city
@@ -38,38 +42,82 @@ function cityButtonHandler() {
 //     });
 // }
 
-
-
-//  * When I click the submit button, the search is stored in localStorage and taken to cityButtonHandler function
+//  * When I click the submit button, the search is pushed to an array and stored in localStorage
+// * API function is then called
 $(searchButtonEl).on('click', function(event) {
     event.preventDefault();
     var searchValue = $(this).siblings('#search-item').val().trim();
-    cities.push(searchValue);
-    localStorage.setItem('cities', JSON.stringify(cities));
-    $('#search-item').val('');
+    if (searchValue) {
+        getApi(searchValue);
+        cities.push(searchValue);
+        localStorage.setItem('cities', JSON.stringify(cities));
+        $('#search-item').val('');
+    } else {
+        alert('Please enter a city name');
+    }
     // searchHistoryHandler();
     // cityButtonHandler();
-    getApi(searchValue);
 });
 
-// * Once the submit button is clicked and cityButtonHandler goes, I fetch the api information needed to display it to the DOM 
+
+
+//  * ^^ I push the input value to the next function below
+// *  I fetch the api data for that specific location
 function getApi(searchValue) {
-    var requestUrl = "https://api.openweathermap.org/data/2.5/weeather?q=" + searchValue + "&appid=66d2d9bcf1100f15b471153e4495b6ac";
+    // console.log(searchValue);
+    var requestUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + searchValue + "&appid=66d2d9bcf1100f15b471153e4495b6ac&units=imperial";
       fetch(requestUrl).then(function(response) {
+          console.log(response);
           if (response.ok) {
               response.json().then(function(weatherData) {
                   displayForecast(weatherData);
               })
           } else {
-              alert('Error:' + response);
+              alert('Connection Error: Try Again');
           }
       })
+    //    ! To do: create a catch
   };
-  
-  //  * I take the data from the Api and dynamically it onto the html
+
+
+
+//   city name, the date, an icon representation of weather conditions,
+// the temperature, the humidity, the wind speed, and the UV index
+  //  * I take the data from the Api and dynamically place it into the DOM
 function displayForecast(weatherData) {
     console.log(weatherData);
-}
+    if (!weatherData) {
+        alert('Error: Invalid Location');
+    } else {
+        // currentWeatherDisplayEl = $('div').addClass('card row').attr('id', 'current-weather-display').appendTo('#weather-forecast');
+        var currentLocationEl = weatherData.name;
+        $('<h2>' + currentLocationEl + '</h2>').appendTo('#forecast-header');
+
+        var currentTempEl = weatherData.main.temp;
+        $('<li>' + currentTempEl + ' F' + '</li>').appendTo('#current-weather-display');
+
+        var currentFeelEl = weatherData.main.feels_like;
+        $('<li>' + 'Feels Like : ' + currentFeelEl + '</li>').appendTo('#current-weather-display');
+
+        var currentHumidityEl = "Current Humidity : " + weatherData.main.humidity + "%";
+        $('<li>' + currentHumidityEl + '</li>').appendTo('#current-weather-display');
+
+        var currentWindSpeedEl = "Current Wind Speed : " + weatherData.wind.speed + " MPH";
+        $('<li>' + currentWindSpeedEl + '</li>').appendTo('#current-weather-display');
+         //  ! currentDateEl = weatherData.date;
+        //  ! currentUVIndexEl = weatherData.main.uvi;
+        // currentIconEl = weatherData.weather.icon;
+        // $('<a>').attr(img, 'href').text(currentIconEl).appendTo('#current-weather-display');
+        // $('<a>').attr('src', currentIconEl)
+    }
+};
+
+        // var currentTemp = weatherData.main;
+    // for (var i=0; i < weatherData.length; i++) {
+    //     var currentForecast = weatherData[i];
+    //     console.log(currentForecast);
+    //     console.log(weatherData[i])
+    // }
 
 
 
