@@ -36,6 +36,10 @@
     color: white;
 }
 
+.current-day {
+    font-size: 2rem;
+}
+
 /*  UV Index Colors */
 .index {
     color: white;

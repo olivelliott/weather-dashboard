@@ -83,22 +83,19 @@ function currentWeatherApi(currentLon, currentLat) {
     //    ! To do: create a catch
   };
 
-//   ! To do: add time // date  // location
-  //   city name, the date, an icon representation of weather conditions,
-// DONE: the temperature, the humidity, the wind speed, and the UV index
+// ! To Do: city name // current date
+// DONE: the temperature, the humidity, the wind speed, and the UV index, an icon representation of weather conditions,
     //  * I take the data from the Api and dynamically place it into the DOM to display current forecast
 function displayForecast(weatherData) {
     console.log(weatherData);
     if (!weatherData) {
         alert('Error: Invalid Location');
     } else {
-        // var currentDateEl = 
-        // $('<li>' + currentDateEl + ' F' + '</li>').appendTo('#forecast-list');
-        // $('<h2>' + cities[0] + '</h2>').appendTo('#forecast-header');
+        $('<h2>').addClass('current-day').text(moment().format('dddd MMMM Do, h:mm a')).appendTo('#forecast-header');
         var iconCode = weatherData.current.weather[0].icon;
-        console.log(iconCode);
         var iconUrl = 'http://openweathermap.org/img/wn/' + iconCode + '@2x.png';
         $('#web-icon').attr('src', iconUrl);
+
         var currentTempEl = weatherData.current.temp;
         $('<li>' + currentTempEl + ' F' + '</li>').appendTo('#forecast-list');
 
@@ -110,10 +107,8 @@ function displayForecast(weatherData) {
 
         var currentWindSpeedEl = 'Current Wind Speed : ' + weatherData.current.wind_speed + ' MPH';
         $('<li>' + currentWindSpeedEl + '</li>').appendTo('#forecast-list');
-         //  ! currentDateEl = weatherData.date;
+        
         var currentUVIndexEl = weatherData.current.uvi;
-// WHEN I view the UV index
-// THEN I am presented with a color that indicates whether the conditions are favorable, moderate, or severe
         if (currentUVIndexEl <= 4) {
             $('<li>' + 'Current UV Index : ' + currentUVIndexEl + '</li>').addClass('index goodIndex').appendTo('#forecast-list');
         } else if (currentUVIndexEl > 4 && currentUVIndexEl < 8) {
