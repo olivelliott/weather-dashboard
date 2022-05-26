@@ -70,7 +70,7 @@ function currentWeatherApi(currentLon, currentLat) {
     // console.log(searchValue);
     var requestUrl = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + currentLat + '&lon=' + currentLon + '&appid=' + weatherApi + '&units=imperial&exclude=minutely,hourly';
       fetch(requestUrl).then(function(response) {
-        //   console.log(response);
+          console.log(response);
           if (response.ok) {
               response.json().then(function(weatherData) {
                 //   fiveDayForecastApi(searchValue);
@@ -83,16 +83,22 @@ function currentWeatherApi(currentLon, currentLat) {
     //    ! To do: create a catch
   };
 
+//   ! To do: add time // date  // location
   //   city name, the date, an icon representation of weather conditions,
-// the temperature, the humidity, the wind speed, and the UV index
+// DONE: the temperature, the humidity, the wind speed, and the UV index
     //  * I take the data from the Api and dynamically place it into the DOM to display current forecast
 function displayForecast(weatherData) {
     console.log(weatherData);
     if (!weatherData) {
         alert('Error: Invalid Location');
     } else {
-        // $('<h2>' + currentLocationEl + '</h2>').appendTo('#forecast-header');
-
+        // var currentDateEl = 
+        // $('<li>' + currentDateEl + ' F' + '</li>').appendTo('#forecast-list');
+        // $('<h2>' + cities[0] + '</h2>').appendTo('#forecast-header');
+        var iconCode = weatherData.current.weather[0].icon;
+        console.log(iconCode);
+        var iconUrl = 'http://openweathermap.org/img/wn/' + iconCode + '@2x.png';
+        $('#web-icon').attr('src', iconUrl);
         var currentTempEl = weatherData.current.temp;
         $('<li>' + currentTempEl + ' F' + '</li>').appendTo('#forecast-list');
 
@@ -106,15 +112,14 @@ function displayForecast(weatherData) {
         $('<li>' + currentWindSpeedEl + '</li>').appendTo('#forecast-list');
          //  ! currentDateEl = weatherData.date;
         var currentUVIndexEl = weatherData.current.uvi;
-        // $('<li>' + 'UV Index : ' + currentUVIndexEl + '</li>').appendTo('#forecast-list');
 // WHEN I view the UV index
 // THEN I am presented with a color that indicates whether the conditions are favorable, moderate, or severe
         if (currentUVIndexEl <= 4) {
-            $('<li>' + 'Current UV Index : ' + currentUVIndexEl + '</li>').addClass('goodIndex').appendTo('#forecast-list');
+            $('<li>' + 'Current UV Index : ' + currentUVIndexEl + '</li>').addClass('index goodIndex').appendTo('#forecast-list');
         } else if (currentUVIndexEl > 4 && currentUVIndexEl < 8) {
-            $('<li>' + 'Current UV Index : ' + currentUVIndexEl + '</li>').addClass('moderateIndex').appendTo('#forecast-list');
+            $('<li>' + 'Current UV Index : ' + currentUVIndexEl + '</li>').addClass('index moderateIndex').appendTo('#forecast-list');
         } else {
-            $('<li>' + 'Current UV Index : ' + currentUVIndexEl + '</li>').addClass('moderateIndex').appendTo('#forecast-list');
+            $('<li>' + 'Current UV Index : ' + currentUVIndexEl + '</li>').addClass('index moderateIndex').appendTo('#forecast-list');
         }
 
     }

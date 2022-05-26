@@ -18,7 +18,7 @@ THEN I am again presented with current and future conditions for that city -->
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.min.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css" />    
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css" />
         <link rel="stylesheet" href="./assets/css/style.css" />
         <title>Weather Dashboard</title>
     </head>
@@ -26,7 +26,7 @@ THEN I am again presented with current and future conditions for that city -->
         <header>
             <h1>Weather Dashboard</h1>
         </header>
-        
+
         <main>
             <div class="container">
                 <div class="card d-flex col-4" id="searchForm">
@@ -44,11 +44,15 @@ THEN I am again presented with current and future conditions for that city -->
         <div class="container">
             <div class="card row" id="current-weather-display">
                 <div class="card-header rounded w-100" id="forecast-header">
-                    <img src="http://openweathermap.org/img/w/10d.png" />     
                 </div>
-                
+
                 <div class="card-body" id="forecast-info">
-                    <ul id="forecast-list"></ul>
+                    <div id="icon">
+                        <img id="web-icon" src="" alt="Weather Icon">
+                    </div>
+                    <div class="weather-conditions">
+                        <ul id="forecast-list"></ul>
+                    </div>
                 </div>
                 <!-- dynamically created content from input -->
             </div>
@@ -62,7 +66,7 @@ THEN I am again presented with current and future conditions for that city -->
         <script src="https://cdn.jsdelivr.net/npm/jquery-ui-touch-punch@0.2.3/jquery.ui.touch-punch.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.15.0/umd/popper.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.3/moment.min.js"></script>      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.3/moment.min.js"></script>
         <script type="text/javascript" src="./assets/js/script.js"></script>
     </body>
 </html>

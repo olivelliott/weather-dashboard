@@ -37,9 +37,14 @@
 }
 
 /*  UV Index Colors */
-.goodIndex {
+.index {
     color: white;
     padding: 15px;
+    text-align: center;
+    border-radius: round;
+}
+
+.goodIndex {
     background-color: green;
 }
 
@@ -61,6 +66,11 @@
     display:flex;
     flex-direction: column;
     justify-content: space-between;
+}
+
+#forecast-list {
+    list-style: none;
+    text-align: center;
 }
 
 #searchForm {
