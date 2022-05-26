@@ -46,7 +46,7 @@ $(searchButtonEl).on('click', function(event) {
     // cityButtonHandler();
 });
 
-
+// *  I fetch the api data for exchanging search for lat/long
 function placeIdCoordinates (searchValue) {
     var requestUrl = 'https://api.openweathermap.org/geo/1.0/direct?q=' + searchValue + '&appid=' + weatherApi;
     fetch(requestUrl).then(function (response) {
@@ -63,7 +63,7 @@ function placeIdCoordinates (searchValue) {
 
 // *  I fetch the api data for that specific location
 function fetchWeatherApi(currentLon, currentLat) {
-    var requestUrl = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + currentLat + '&lon=' + currentLon + '&appid=' + weatherApi + '&units=imperial&exclude=minutely,hourly&';
+    var requestUrl = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + currentLat + '&lon=' + currentLon + '&appid=' + weatherApi + '&units=imperial&exclude=minutely,hourly';
       fetch(requestUrl).then(function(response) {
           if (response.ok) {
               response.json().then(function(weatherData) {
@@ -116,22 +116,21 @@ function fiveDayForecast(weatherData) {
     console.log(weatherData.daily);
     var fiveDayData = weatherData.daily;
     var cardHolder = $('<div>').addClass('forecast-info row').appendTo('#forecast-cards');
-    for (var i=0; i < fiveDayData.length; i++) {
+
+    for (var i=0; i < 5; i++) {
         var forecastCardEl = $('<div>').addClass('card').appendTo(cardHolder);
         // $('#web-icon').attr('src', iconUrl);
         var forecastTemp = fiveDayData[i].temp.day;
-        var forecastHumidity = fiveDayData[i].humidity;
+        var forecastHumidity = 'Humidity : ' + fiveDayData[i].humidity + '%';
         var forecastWindSpeed = fiveDayData[i].wind_speed;
         var forecastUVIndex = fiveDayData[i].uvi;
-        
-        var iconCode = fiveDayData[i].weather[i].icon;
+
+        var iconCode = fiveDayData[i].weather[0].icon;
         var iconUrl = 'http://openweathermap.org/img/wn/' + iconCode + '@2x.png';
         $('<img>').attr('src', iconUrl).appendTo(forecastCardEl);
 
-
-
         $('<li>' + forecastTemp + ' F' + '</li>').appendTo(forecastCardEl);
-        $('<li>' + forecastHumidity + ' %' + '</li>').appendTo(forecastCardEl);
+        $('<li>' + forecastHumidity + '</li>').appendTo(forecastCardEl);
         $('<li>' + forecastWindSpeed + ' MPH' + '</li>').appendTo(forecastCardEl);
 
         if (forecastUVIndex <= 4) {
@@ -141,10 +140,6 @@ function fiveDayForecast(weatherData) {
         } else {
             $('<li>' + 'UV Index : ' + forecastUVIndex + '</li>').addClass('index badIndex').appendTo(forecastCardEl);
         }
-
-
-
-
     }
 }
 
