@@ -53,7 +53,7 @@ $(searchButtonEl).on('click', function(event) {
 function placeIdCoordinates (searchValue) {
     var requestUrl = 'https://api.openweathermap.org/geo/1.0/direct?q=' + searchValue + '&appid=' + weatherApi;
     fetch(requestUrl).then(function (response) {
-        console.log(response);
+        // console.log(response);
         if (response.ok) {
             response.json().then(function(coordinateData) {
                 console.log(coordinateData[0].lon);
@@ -71,9 +71,9 @@ function placeIdCoordinates (searchValue) {
 // *  I fetch the api data for that specific location
 function currentWeatherApi(currentLon, currentLat) {
     // console.log(searchValue);
-    var requestUrl = 'https://api.openweathermap.org/data/2.5/weather?q=' + searchValue + '&appid=' + weatherApi + '&units=imperial&cnt=5';
+    var requestUrl = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + currentLat + '&lon=' + currentLon + '&appid=' + weatherApi + '&units=imperial&exclude=minutely,hourly';
       fetch(requestUrl).then(function(response) {
-          console.log(response);
+        //   console.log(response);
           if (response.ok) {
               response.json().then(function(weatherData) {
                 //   fiveDayForecastApi(searchValue);
@@ -85,6 +85,40 @@ function currentWeatherApi(currentLon, currentLat) {
       })
     //    ! To do: create a catch
   };
+
+  //   city name, the date, an icon representation of weather conditions,
+// the temperature, the humidity, the wind speed, and the UV index
+    //  * I take the data from the Api and dynamically place it into the DOM to display current forecast
+function displayForecast(weatherData) {
+    console.log(weatherData);
+    if (!weatherData) {
+        alert('Error: Invalid Location');
+    } else {
+        // currentWeatherDisplayEl = $('div').addClass('card row').attr('id', 'current-weather-display').appendTo('#weather-forecast');
+        // var currentLocationEl = weatherData.name;
+        // $('<h2>' + currentLocationEl + '</h2>').appendTo('#forecast-header');
+
+        var currentTempEl = weatherData.current.temp;
+        $('<li>' + currentTempEl + ' F' + '</li>').appendTo('#forecast-list');
+
+        var currentFeelEl = weatherData.current.feels_like;
+        $('<li>' + 'Feels Like : ' + currentFeelEl + 'F' + '</li>').appendTo('#forecast-list');
+
+        var currentHumidityEl = 'Current Humidity : ' + weatherData.current.humidity + '%';
+        $('<li>' + currentHumidityEl + '</li>').appendTo('#forecast-list');
+
+        var currentWindSpeedEl = 'Current Wind Speed : ' + weatherData.current.wind_speed + ' MPH';
+        $('<li>' + currentWindSpeedEl + '</li>').appendTo('#forecast-list');
+         //  ! currentDateEl = weatherData.date;
+        // ! currentUVIndexEl = weatherData.current.current.uvi;
+        // console.log(currentUVIndexEl);
+        // currentIconEl = weatherData.weather.icon;
+        // $('<a>').attr(img, 'href').text(currentIconEl).appendTo('#current-weather-display');
+        // $('<a>').attr('src', currentIconEl)
+    }
+    // } displayFiveDayForecast(weatherData);
+};
+
 
 //   function fiveDayForecastApi(searchValue) {
 //       var requestUrl = 'https://api.openweathermap.org/data/2.5/forecast/daily?q=' + searchValue + '&units=imperial&cnt=5&appid=' + weatherApi;
@@ -98,37 +132,6 @@ function currentWeatherApi(currentLon, currentLat) {
 //         });
 // }
 
-//   city name, the date, an icon representation of weather conditions,
-// the temperature, the humidity, the wind speed, and the UV index
-  //  * I take the data from the Api and dynamically place it into the DOM to display current forecast
-function displayForecast(weatherData) {
-    console.log(weatherData);
-    if (!weatherData) {
-        alert('Error: Invalid Location');
-    } else {
-        // currentWeatherDisplayEl = $('div').addClass('card row').attr('id', 'current-weather-display').appendTo('#weather-forecast');
-        var currentLocationEl = weatherData.name;
-        $('<h2>' + currentLocationEl + '</h2>').appendTo('#forecast-header');
-
-        var currentTempEl = weatherData.main.temp;
-        $('<li>' + currentTempEl + ' F' + '</li>').appendTo('#forecast-list');
-
-        var currentFeelEl = weatherData.main.feels_like;
-        $('<li>' + 'Feels Like : ' + currentFeelEl + 'F' + '</li>').appendTo('#forecast-list');
-
-        var currentHumidityEl = 'Current Humidity : ' + weatherData.main.humidity + '%';
-        $('<li>' + currentHumidityEl + '</li>').appendTo('#forecast-list');
-
-        var currentWindSpeedEl = 'Current Wind Speed : ' + weatherData.wind.speed + ' MPH';
-        $('<li>' + currentWindSpeedEl + '</li>').appendTo('#forecast-list');
-         //  ! currentDateEl = weatherData.date;
-        // ! currentUVIndexEl = weatherData.main.current.uvi;
-        // console.log(currentUVIndexEl);
-        // currentIconEl = weatherData.weather.icon;
-        // $('<a>').attr(img, 'href').text(currentIconEl).appendTo('#current-weather-display');
-        // $('<a>').attr('src', currentIconEl)
-    } displayFiveDayForecast(weatherData);
-};
 
 
 // //  * I take the data from the Api and dynamically create 5 day forecast data
