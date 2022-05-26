@@ -36,21 +36,32 @@
     color: white;
 }
 
+/*  UV Index Colors */
+.goodIndex {
+    color: white;
+    padding: 15px;
+    background-color: green;
+}
+
+.moderateIndex {
+    color: yellow;
+}
+
+.badIndex {
+    color: red;
+}
+
+#forecast-header {
+    padding: 15px;
+    background-color: #8b9dc3;
+    color: white;
+}
+
 #current-weather-display {
     display:flex;
     flex-direction: column;
     justify-content: space-between;
 }
-
-/* #forecast-list {
-    display: flex;
-}
-
-#forecast-list {
-    display: flex;
-    flex-direction: column;
-    text-decoration: none;
-} */
 
 #searchForm {
     padding: 15px;
@@ -63,11 +74,6 @@
     color: white;
 }
 
-#forecast-header {
-    padding: 15px;
-    background-color: #8b9dc3;
-    color: white;
-}
 /* #current-weather-display {
     display: none;
 } */
