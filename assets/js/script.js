@@ -115,12 +115,52 @@ function displayForecast(weatherData) {
 function fiveDayForecast(weatherData) {
     console.log(weatherData.daily);
     var fiveDayData = weatherData.daily;
+    var cardHolder = $('<div>').addClass('forecast-info row').appendTo('#forecast-cards');
     for (var i=0; i < fiveDayData.length; i++) {
+        var testDiv = $('<div>').addClass('card test').appendTo(cardHolder);
         forecastTemp = fiveDayData[i].temp.day;
-        $('<li>' + forecastTemp + ' F' + '</li>').addClass('card col-4').appendTo('#forecast-cards');
-        console.log(forecastTemp);
+        forecastHumidity = fiveDayData[i].humidity
+        $('<li>' + forecastTemp + ' F' + '</li>').appendTo(testDiv);
+        $('<li>' + forecastHumidity + ' %' + '</li>').appendTo(testDiv);
+
+
     }
 }
+
+// 0:
+// clouds: 100
+// dew_point: 58.96
+// dt: 1653498000
+// feels_like: {day: 68.92, night: 63.34, eve: 65.52, morn: 59.54}
+// humidity: 71
+// moon_phase: 0.85
+// moonrise: 1653464040
+// moonset: 1653508440
+// pop: 0.08
+// pressure: 1024
+// sunrise: 1653472975
+// sunset: 1653524425
+// temp:
+    // day: 68.99
+    // eve: 65.43
+    // max: 70.68
+    // min: 58.82
+    // morn: 59.68
+    // night: 63.14
+// [[Prototype]]: Object
+// uvi: 6.94
+// weather: Array(1)
+// 0:
+// description: "overcast clouds"
+// icon: "04d"
+// id: 804
+// main: "Clouds"
+// [[Prototype]]: Object
+// length: 1
+// [[Prototype]]: Array(0)
+// wind_deg: 51
+// wind_gust: 17.07
+// wind_speed: 9.37
 
 
 
