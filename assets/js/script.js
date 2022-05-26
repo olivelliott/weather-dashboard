@@ -107,7 +107,7 @@ function displayForecast(weatherData) {
         } else if (currentUVIndexEl > 4 && currentUVIndexEl < 8) {
             $('<li>' + 'Current UV Index : ' + currentUVIndexEl + '</li>').addClass('index moderateIndex').appendTo('#forecast-list');
         } else {
-            $('<li>' + 'Current UV Index : ' + currentUVIndexEl + '</li>').addClass('index moderateIndex').appendTo('#forecast-list');
+            $('<li>' + 'Current UV Index : ' + currentUVIndexEl + '</li>').addClass('index badIndex').appendTo('#forecast-list');
         }
     } fiveDayForecast(weatherData);
 };
@@ -117,11 +117,32 @@ function fiveDayForecast(weatherData) {
     var fiveDayData = weatherData.daily;
     var cardHolder = $('<div>').addClass('forecast-info row').appendTo('#forecast-cards');
     for (var i=0; i < fiveDayData.length; i++) {
-        var testDiv = $('<div>').addClass('card test').appendTo(cardHolder);
-        forecastTemp = fiveDayData[i].temp.day;
-        forecastHumidity = fiveDayData[i].humidity
-        $('<li>' + forecastTemp + ' F' + '</li>').appendTo(testDiv);
-        $('<li>' + forecastHumidity + ' %' + '</li>').appendTo(testDiv);
+        var forecastCardEl = $('<div>').addClass('card').appendTo(cardHolder);
+        // $('#web-icon').attr('src', iconUrl);
+        var forecastTemp = fiveDayData[i].temp.day;
+        var forecastHumidity = fiveDayData[i].humidity;
+        var forecastWindSpeed = fiveDayData[i].wind_speed;
+        var forecastUVIndex = fiveDayData[i].uvi;
+        
+        var iconCode = fiveDayData[i].weather[i].icon;
+        var iconUrl = 'http://openweathermap.org/img/wn/' + iconCode + '@2x.png';
+        $('<img>').attr('src', iconUrl).appendTo(forecastCardEl);
+
+
+
+        $('<li>' + forecastTemp + ' F' + '</li>').appendTo(forecastCardEl);
+        $('<li>' + forecastHumidity + ' %' + '</li>').appendTo(forecastCardEl);
+        $('<li>' + forecastWindSpeed + ' MPH' + '</li>').appendTo(forecastCardEl);
+
+        if (forecastUVIndex <= 4) {
+            $('<li>' + 'UV Index : ' + forecastUVIndex + '</li>').addClass('index goodIndex').appendTo(forecastCardEl);
+        } else if (forecastUVIndex > 4 && forecastUVIndex < 8) {
+            $('<li>' + 'UV Index : ' + forecastUVIndex + '</li>').addClass('index moderateIndex').appendTo(forecastCardEl);
+        } else {
+            $('<li>' + 'UV Index : ' + forecastUVIndex + '</li>').addClass('index badIndex').appendTo(forecastCardEl);
+        }
+
+
 
 
     }

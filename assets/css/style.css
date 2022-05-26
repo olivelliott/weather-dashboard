@@ -53,11 +53,11 @@
 }
 
 .moderateIndex {
-    color: yellow;
+    background-color: yellow;
 }
 
 .badIndex {
-    color: red;
+    background-color: red;
 }
 
 #forecast-header {
@@ -75,6 +75,20 @@
 #forecast-list {
     list-style: none;
     text-align: center;
+}
+
+/* .forecast-info {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+} */
+
+#forecast-cards {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
 }
 
 #searchForm {
