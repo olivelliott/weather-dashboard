@@ -24,7 +24,7 @@ var cities = [];
 //     var searchHistoryButton = $('<button>').addClass('btn search-history-button').text(pastSearchValue[i]).attr('type', 'submit');
 //     console.log(searchHistoryButton);
 //     $(searchHistoryButton).appendTo('#search-history');
-//    }; currentWeatherApi();
+//    }; fetchWeatherApi();
 // }
 
 
@@ -34,7 +34,7 @@ $(searchButtonEl).on('click', function(event) {
     event.preventDefault();
     var searchValue = $(this).siblings('#search-item').val().trim();
     if (searchValue) {
-        // currentWeatherApi(searchValue);
+        // fetchWeatherApi(searchValue);
         placeIdCoordinates(searchValue);
         cities.push(searchValue);
         localStorage.setItem('cities', JSON.stringify(cities));
@@ -53,24 +53,18 @@ function placeIdCoordinates (searchValue) {
         // console.log(response);
         if (response.ok) {
             response.json().then(function(coordinateData) {
-                console.log(coordinateData[0].lon);
                 var currentLon = coordinateData[0].lon;
                 var currentLat = coordinateData[0].lat;
-                currentWeatherApi(currentLon, currentLat);
+                fetchWeatherApi(currentLon, currentLat);
             })
         }
     })
 }
 
-
-
-//  * ^^ I push the input value to the next function below
 // *  I fetch the api data for that specific location
-function currentWeatherApi(currentLon, currentLat) {
-    // console.log(searchValue);
-    var requestUrl = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + currentLat + '&lon=' + currentLon + '&appid=' + weatherApi + '&units=imperial&exclude=minutely,hourly';
+function fetchWeatherApi(currentLon, currentLat) {
+    var requestUrl = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + currentLat + '&lon=' + currentLon + '&appid=' + weatherApi + '&units=imperial&exclude=minutely,hourly&';
       fetch(requestUrl).then(function(response) {
-          console.log(response);
           if (response.ok) {
               response.json().then(function(weatherData) {
                 //   fiveDayForecastApi(searchValue);
@@ -83,11 +77,10 @@ function currentWeatherApi(currentLon, currentLat) {
     //    ! To do: create a catch
   };
 
-// ! To Do: city name // current date
+// ! To Do: city name
 // DONE: the temperature, the humidity, the wind speed, and the UV index, an icon representation of weather conditions,
     //  * I take the data from the Api and dynamically place it into the DOM to display current forecast
 function displayForecast(weatherData) {
-    console.log(weatherData);
     if (!weatherData) {
         alert('Error: Invalid Location');
     } else {
@@ -107,7 +100,7 @@ function displayForecast(weatherData) {
 
         var currentWindSpeedEl = 'Current Wind Speed : ' + weatherData.current.wind_speed + ' MPH';
         $('<li>' + currentWindSpeedEl + '</li>').appendTo('#forecast-list');
-        
+
         var currentUVIndexEl = weatherData.current.uvi;
         if (currentUVIndexEl <= 4) {
             $('<li>' + 'Current UV Index : ' + currentUVIndexEl + '</li>').addClass('index goodIndex').appendTo('#forecast-list');
@@ -116,31 +109,18 @@ function displayForecast(weatherData) {
         } else {
             $('<li>' + 'Current UV Index : ' + currentUVIndexEl + '</li>').addClass('index moderateIndex').appendTo('#forecast-list');
         }
-
-    }
-    // } displayFiveDayForecast(weatherData);
+    } fiveDayForecast(weatherData);
 };
-
-
-//   function fiveDayForecastApi(searchValue) {
-//       var requestUrl = 'https://api.openweathermap.org/data/2.5/forecast/daily?q=' + searchValue + '&units=imperial&cnt=5&appid=' + weatherApi;
-//         fetch(requestUrl).then(function(response) {
-//             console.log(response)
-//             if (response.ok) {
-//                 response.json().then(function(forecastData) {
-//                     displayFiveDayForecast(forecastData);
-//                 })
-//             }
-//         });
-// }
-
-
-
 // //  * I take the data from the Api and dynamically create 5 day forecast data
-// function displayFiveDayForecast(forecastData) {
-//     console.log(forecastData);
-    
-// }
+function fiveDayForecast(weatherData) {
+    console.log(weatherData.daily);
+    var fiveDayData = weatherData.daily;
+    for (var i=0; i < fiveDayData.length; i++) {
+        forecastTemp = fiveDayData[i].temp.day;
+        $('<li>' + forecastTemp + ' F' + '</li>').addClass('card col-4').appendTo('#forecast-cards');
+        console.log(forecastTemp);
+    }
+}
 
 
 
