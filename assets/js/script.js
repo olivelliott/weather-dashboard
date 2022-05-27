@@ -6,15 +6,13 @@ var cities = [];
 
 // WHEN I search for a city
 // THEN I am presented with current and future conditions for that city and that city is added to the search history
-// WHEN I view current weather conditions for that city
-
+//  ! To do - add search history
 
 // WHEN I view future weather conditions for that city
 // THEN I am presented with a 5-day forecast that displays the date, an icon representation of weather conditions, the temperature, the wind speed, and the humidity
 // WHEN I click on a city in the search history
 // THEN I am again presented with current and future conditions for that city -->
 
-// api = AIzaSyDwDj4Jf2xSA6hJJ9cYetg8hn4SX3OPs04
 
 //  * When I click the search button, a button is dynamically generated and displayed in a card underneath
 //  ! To Do: Fix the multiple button issue
@@ -46,29 +44,29 @@ $(searchButtonEl).on('click', function(event) {
     // cityButtonHandler();
 });
 
-// *  I fetch the api data for exchanging search for lat/long
+// *  I fetch the api data for exchanging search for lat/lon
 function placeIdCoordinates (searchValue) {
     var requestUrl = 'https://api.openweathermap.org/geo/1.0/direct?q=' + searchValue + '&appid=' + weatherApi;
     fetch(requestUrl).then(function (response) {
-        // console.log(response);
         if (response.ok) {
             response.json().then(function(coordinateData) {
+                var currentLocation = coordinateData[0].name;
                 var currentLon = coordinateData[0].lon;
                 var currentLat = coordinateData[0].lat;
-                fetchWeatherApi(currentLon, currentLat);
+                fetchWeatherApi(currentLon, currentLat, currentLocation);
             })
         }
     })
 }
 
 // *  I fetch the api data for that specific location
-function fetchWeatherApi(currentLon, currentLat) {
+function fetchWeatherApi(currentLon, currentLat, currentLocation) {
     var requestUrl = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + currentLat + '&lon=' + currentLon + '&appid=' + weatherApi + '&units=imperial&exclude=minutely,hourly';
       fetch(requestUrl).then(function(response) {
           if (response.ok) {
               response.json().then(function(weatherData) {
                 //   fiveDayForecastApi(searchValue);
-                  displayForecast(weatherData);
+                  displayForecast(weatherData, currentLocation);
               })
           } else {
               alert('Connection Error: Try Again');
@@ -77,31 +75,28 @@ function fetchWeatherApi(currentLon, currentLat) {
     //    ! To do: create a catch
   };
 
-// ! To Do: city name
-// DONE: the temperature, the humidity, the wind speed, and the UV index, an icon representation of weather conditions,
+// DONE: the temperature, the humidity, the wind speed, and the UV index, an icon representation of weather conditions, current location
     //  * I take the data from the Api and dynamically place it into the DOM to display current forecast
-function displayForecast(weatherData) {
+function displayForecast(weatherData, currentLocation) {
     if (!weatherData) {
         alert('Error: Invalid Location');
     } else {
         $('<h2>').addClass('current-day').text(moment().format('dddd MMMM Do, h:mm a')).appendTo('#forecast-header');
+        var currentTempEl = weatherData.current.temp;
+        var currentFeelEl = weatherData.current.feels_like;
+        var currentHumidityEl = 'Current Humidity : ' + weatherData.current.humidity + '%';
+        var currentWindSpeedEl = 'Current Wind Speed : ' + weatherData.current.wind_speed + ' MPH';
+        var currentUVIndexEl = weatherData.current.uvi;
+
         var iconCode = weatherData.current.weather[0].icon;
         var iconUrl = 'http://openweathermap.org/img/wn/' + iconCode + '@2x.png';
         $('#web-icon').attr('src', iconUrl);
 
-        var currentTempEl = weatherData.current.temp;
+        $('<h2>' + currentLocation + '</h2>').appendTo('#forecast-list');
         $('<li>' + currentTempEl + ' F' + '</li>').appendTo('#forecast-list');
-
-        var currentFeelEl = weatherData.current.feels_like;
         $('<li>' + 'Feels Like : ' + currentFeelEl + 'F' + '</li>').appendTo('#forecast-list');
-
-        var currentHumidityEl = 'Current Humidity : ' + weatherData.current.humidity + '%';
         $('<li>' + currentHumidityEl + '</li>').appendTo('#forecast-list');
-
-        var currentWindSpeedEl = 'Current Wind Speed : ' + weatherData.current.wind_speed + ' MPH';
         $('<li>' + currentWindSpeedEl + '</li>').appendTo('#forecast-list');
-
-        var currentUVIndexEl = weatherData.current.uvi;
         if (currentUVIndexEl <= 4) {
             $('<li>' + 'Current UV Index : ' + currentUVIndexEl + '</li>').addClass('index goodIndex').appendTo('#forecast-list');
         } else if (currentUVIndexEl > 4 && currentUVIndexEl < 8) {
@@ -118,6 +113,7 @@ function fiveDayForecast(weatherData) {
     var cardHolder = $('<div>').addClass('forecast-info row').appendTo('#forecast-cards');
 
     for (var i=0; i < 5; i++) {
+        // $('<h2>').addClass('future-day').text(moment().format('dddd MMMM Do').appendTo('#forecast-cards'));
         var forecastCardEl = $('<div>').addClass('card').appendTo(cardHolder);
         // $('#web-icon').attr('src', iconUrl);
         var forecastTemp = fiveDayData[i].temp.day;
