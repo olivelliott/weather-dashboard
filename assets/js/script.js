@@ -113,18 +113,18 @@ function fiveDayForecast(weatherData) {
     for (var i=0; i < 5; i++) {
         var forecastCardEl = $('<div>').addClass('card').appendTo(cardHolder);
         $('<h2>').addClass('card-header').text(moment().add([i], 'day')).appendTo(forecastCardEl);
-        var forecastTemp = fiveDayData[i].temp.day;
+        var forecastTemp = 'High : ' + fiveDayData[i].temp.day + ' F';
         var forecastHumidity = 'Humidity : ' + fiveDayData[i].humidity + '%';
-        var forecastWindSpeed = fiveDayData[i].wind_speed;
+        var forecastWindSpeed = 'Wind Speed : ' + fiveDayData[i].wind_speed + ' MPH';
         var forecastUVIndex = fiveDayData[i].uvi;
 
         var iconCode = fiveDayData[i].weather[0].icon;
         var iconUrl = 'http://openweathermap.org/img/wn/' + iconCode + '@2x.png';
         $('<img>').attr('src', iconUrl).appendTo(forecastCardEl);
 
-        $('<li>' + forecastTemp + ' F' + '</li>').appendTo(forecastCardEl);
+        $('<li>' + forecastTemp + '</li>').appendTo(forecastCardEl);
         $('<li>' + forecastHumidity + '</li>').appendTo(forecastCardEl);
-        $('<li>' + forecastWindSpeed + ' MPH' + '</li>').appendTo(forecastCardEl);
+        $('<li>' + forecastWindSpeed + '</li>').appendTo(forecastCardEl);
 
         if (forecastUVIndex <= 4) {
             $('<li>' + 'UV Index : ' + forecastUVIndex + '</li>').addClass('index goodIndex').appendTo(forecastCardEl);
