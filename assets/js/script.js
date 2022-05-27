@@ -1,8 +1,8 @@
 var searchButtonEl = $('#search-btn');
-var currentWeatherDisplayEl = $('#current-weather');
 var weatherApi = '66d2d9bcf1100f15b471153e4495b6ac';
 // var currentDayEl = moment().format('dddd MMMM Do')
 var cities = [];
+var searchHistoryButton = $('.search-history-button');
 
 
 // WHEN I search for a city
@@ -73,9 +73,12 @@ function fetchWeatherApi(currentLon, currentLat, currentLocation) {
     //    ! To do: create a catch
   };
 
+//   $('#current-forecast').style.display = 'block';
+
 // DONE: the temperature, the humidity, the wind speed, and the UV index, an icon representation of weather conditions, current location
     //  * I take the data from the Api and dynamically place it into the DOM to display current forecast
 function displayForecast(weatherData, currentLocation) {
+    console.log(currentLocation)
     if (!weatherData) {
         alert('Error: Invalid Location');
     } else {
@@ -102,11 +105,11 @@ function displayForecast(weatherData, currentLocation) {
         } else {
             $('<li>' + 'Current UV Index : ' + currentUVIndexEl + '</li>').addClass('index badIndex').appendTo('#forecast-list');
         }
-    } fiveDayForecast(weatherData);
+    } fiveDayForecast(weatherData, currentLocation);
 };
 // //  * I take the data from the Api and dynamically create 5 day forecast data
-function fiveDayForecast(weatherData) {
-    console.log(weatherData.daily);
+function fiveDayForecast(weatherData, currentLocation) {
+    console.log(currentLocation);
     var fiveDayData = weatherData.daily;
     var cardHolder = $('<div>').addClass('forecast-info row').appendTo('#forecast-cards');
 
@@ -133,8 +136,15 @@ function fiveDayForecast(weatherData) {
         } else {
             $('<li>' + 'UV Index : ' + forecastUVIndex + '</li>').addClass('index badIndex').appendTo(forecastCardEl);
         }
-    }
+    } searchButtonHandler(weatherData, currentLocation);
 }
+
+function searchButtonHandler(weatherData, currentLocation) {
+    $('<button>' + currentLocation + '</button>').addClass('btn search-history-button').attr('type', 'submit').appendTo('#search-history');
+}
+
+
+
 
 // 0:
 // clouds: 100
