@@ -1,15 +1,13 @@
 var searchButtonEl = $('#search-btn');
 var currentWeatherDisplayEl = $('#current-weather');
 var weatherApi = '66d2d9bcf1100f15b471153e4495b6ac';
+// var currentDayEl = moment().format('dddd MMMM Do')
 var cities = [];
 
 
 // WHEN I search for a city
 // THEN I am presented with current and future conditions for that city and that city is added to the search history
 //  ! To do - add search history
-
-// WHEN I view future weather conditions for that city
-// THEN I am presented with a 5-day forecast that displays the date, an icon representation of weather conditions, the temperature, the wind speed, and the humidity
 // WHEN I click on a city in the search history
 // THEN I am again presented with current and future conditions for that city -->
 
@@ -113,9 +111,8 @@ function fiveDayForecast(weatherData) {
     var cardHolder = $('<div>').addClass('forecast-info row').appendTo('#forecast-cards');
 
     for (var i=0; i < 5; i++) {
-        // $('<h2>').addClass('future-day').text(moment().format('dddd MMMM Do').appendTo('#forecast-cards'));
         var forecastCardEl = $('<div>').addClass('card').appendTo(cardHolder);
-        // $('#web-icon').attr('src', iconUrl);
+        $('<h2>').addClass('card-header').text(moment().add([i], 'day')).appendTo(forecastCardEl);
         var forecastTemp = fiveDayData[i].temp.day;
         var forecastHumidity = 'Humidity : ' + fiveDayData[i].humidity + '%';
         var forecastWindSpeed = fiveDayData[i].wind_speed;

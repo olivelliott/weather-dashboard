@@ -49,15 +49,15 @@
 }
 
 .goodIndex {
-    background-color: green;
+    background-color: #93c47d;
 }
 
 .moderateIndex {
-    background-color: yellow;
+    background-color: #ffd966;
 }
 
 .badIndex {
-    background-color: red;
+    background-color: #e06666;
 }
 
 #forecast-header {
