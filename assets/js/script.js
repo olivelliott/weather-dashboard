@@ -4,29 +4,6 @@ var searchHistoryButton = $('.search-history-button');
 const weatherContainerEl = document.querySelector('.weather-container');
 var cities =  [];
 
-// JSON.parse(localStorage.getItem('usernames')) 
-
-// WHEN I search for a city
-// THEN I am presented with current and future conditions for that city and that city is added to the search history
-//  ! To do - add search history
-// WHEN I click on a city in the search history
-// THEN I am again presented with current and future conditions for that city -->
-
-//  * I take the current location data and dynamically generate a button 
-// function searchButtonHandler(weatherData, currentLocation) {
-//     // var searchLocation = currentLocation
-//     // var array = cities.toString(' ');
-//     // $('<a>').attr('href', .appendTo('.search-history-button');
-//     localStorage.setItem('cities', JSON.stringify(cities));
-//     // loadSearchHistory();
-// }
-
-// function loadSearchHistory() {
-//     var searchHistory = JSON.parse(localStorage.getItem('cities'))
-//     console.log(searchHistory);
-// }
-
-
 
 //  * When I click the submit button, I dynamically generate a button that will be displayed as search history
 //  * I then push that value to save it into localStorage
@@ -83,7 +60,6 @@ function fetchWeatherApi(currentLon, currentLat, currentLocation) {
     //    ! To do: create a catch
   };
 
-// DONE: the temperature, the humidity, the wind speed, and the UV index, an icon representation of weather conditions, current location
     //  * I take the data from the Api and dynamically place it into the DOM to display current forecast
 function displayForecast(weatherData, currentLocation) {
     console.log(currentLocation)
@@ -114,7 +90,6 @@ function displayForecast(weatherData, currentLocation) {
         }
     } fiveDayForecast(weatherData, currentLocation);
 };
-
 
 // * I take the data from the Api and dynamically create 5 day forecast data
 function fiveDayForecast(weatherData) {
@@ -159,73 +134,3 @@ function loadSearchHistory() {
 
 loadSearchHistory();
 
-
-// $('#search-btn').on('click', searchButtonHandler);
-// loadSearchHistory();
-
-
-//  * When I click the search button, a button is dynamically generated and displayed in a card underneath
-//  ! To Do: Fix the multiple button issue
-// function cityButtonHandler() {
-//     var pastSearchValue = JSON.parse(localStorage.getItem('cities'));
-//    for (var i = 0; i < pastSearchValue.length; i++) {
-//     var searchHistoryButton = $('<button>').addClass('btn search-history-button').text(pastSearchValue[i]).attr('type', 'submit');
-//     console.log(searchHistoryButton);
-//     $(searchHistoryButton).appendTo('#search-history');
-//    }; fetchWeatherApi();
-// }
-
-
-// $('.search-history-button').on('submit', displayForecast());
-
-
-
-// function saveSearchHistory(searchValue) {
-//     if (cities) {
-//         cities.push(searchValue);
-//         localStorage.setItem('cities', JSON.stringify(cities));
-//         placeIdCoordinates(searchValue);
-//     } else if (!cities) {
-//         cities.push(searchValue);
-//         localStorage.setItem('cities', JSON.stringify(cities));
-//         placeIdCoordinates(searchValue);
-//     }
-// }
-
-// //  * I find the value of the search and push it to dynamically generate a button for that location
-// function searchButtonHandler(searchValue) {
-//     var searchValue = $(this).siblings('#search-item').val().trim();
-//     if (searchValue) {
-//         placeIdCoordinates(searchValue);
-//     } else {
-//     } 
-// }
-
-// function searchHistoryBtn(searchValue) {
-//     var searchButtonHolder = $('<ul>').addClass('search-history col').appendTo('#search-history');
-//     $('<li>' + searchValue + '</li>').addClass('btn search-history-button').appendTo(searchButtonHolder);
-//     placeIdCoordinates(searchValue);
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-// function loadSearchHistory() {
-//     // $('#search-history').each(function() {
-//         var pastSearchValue = JSON.parse(localStorage.getItem('cities'));
-//         // for (var i = 0; i < pastSearchValue.length; i++) {
-//         //     var searchHistoryButton = $('<button>').addClass('btn search-history-button').text(pastSearchValue[i]).attr('type', 'submit');
-//         //     console.log(searchHistoryButton);
-//         //     $(searchHistoryButton).appendTo('#search-history');
-//         //    };
-//         cityButtonHandler(pastSearchValue);
-//         }
