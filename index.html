@@ -41,34 +41,35 @@ THEN I am again presented with current and future conditions for that city -->
                 </div>
         </div>
 
-        <div class="container" id="current-forecast">
-            <div class="card row" id="current-weather-display">
-                <div class="card-header rounded w-100" id="forecast-header">
+        <div class="weather-container">
+            <div class="container" id="current-forecast">
+                <div class="card row" id="current-weather-display">
+                    <div class="card-header rounded w-100" id="forecast-header">
+                    </div>
+
+                    <div class="card-body" id="forecast-info">
+                        <div id="icon">
+                            <img id="web-icon" src="" alt="Weather Icon">
+                        </div>
+                        <div class="weather-conditions">
+                            <ul id="forecast-list"></ul>
+                        </div>
+                    </div>
+                    <!-- dynamically created content from input -->
                 </div>
 
-                <div class="card-body" id="forecast-info">
-                    <div id="icon">
-                        <img id="web-icon" src="" alt="Weather Icon">
-                    </div>
-                    <div class="weather-conditions">
-                        <ul id="forecast-list"></ul>
-                    </div>
+            </div>
+
+            <div class="container" id="five-day-forecast">
+                <div class="card" id="forecast-cards">
+                    <!-- <div class="card col-3" id="card-one"></div>
+                    <div class="card col-3" id="card-two"></div>
+                    <div class="card col-3" id="card-three"></div>
+                    <div class="card col-3" id="card-four"></div>
+                    <div class="card col-3" id="card-five"></div> -->
                 </div>
-                <!-- dynamically created content from input -->
-            </div>
-
-        </div>
-
-        <div class="container" id="five-day-forecast">
-            <div class="card" id="forecast-cards">
-                <!-- <div class="card col-3" id="card-one"></div>
-                <div class="card col-3" id="card-two"></div>
-                <div class="card col-3" id="card-three"></div>
-                <div class="card col-3" id="card-four"></div>
-                <div class="card col-3" id="card-five"></div> -->
             </div>
         </div>
-
 
         </main>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
